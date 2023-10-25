@@ -133,11 +133,18 @@ namespace NPCDesigner
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            if (textBox2.Text == "") npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (0, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            else npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
             npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].id, textBox3.Text, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            if (textBox3.Text == "none")
+            {
+                MessageBox.Show("none和空白等同，将会变回空白，如有更多设置请更改这段源码");
+                textBox3.Text = "";
+            }
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -182,6 +189,11 @@ namespace NPCDesigner
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].id, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, textBox1.Text);
+            if (textBox1.Text == "none")
+            {
+                MessageBox.Show("none和空白等同，将会变回空白，如有更多设置请更改这段源码");
+                textBox1.Text = "";
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)

@@ -1,0 +1,16 @@
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\bin\Release\net6.0-windows\win-x64\NPCDesigner.exe
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\bin\Release\net6.0-windows\win-x64\NPCDesigner.deps.json
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\bin\Release\net6.0-windows\win-x64\NPCDesigner.runtimeconfig.json
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\bin\Release\net6.0-windows\win-x64\NPCDesigner.dll
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\bin\Release\net6.0-windows\win-x64\NPCDesigner.pdb
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.Form1.resources
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.csproj.GenerateResource.cache
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.AssemblyInfoInputs.cache
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.AssemblyInfo.cs
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.csproj.CoreCompileInputs.cache
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.dll
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\refint\NPCDesigner.dll
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.pdb
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\NPCDesigner.genruntimeconfig.cache
+D:\GitHub Projects\MotaNPCDesigner\NPCDesigner\obj\Release\net6.0-windows\win-x64\ref\NPCDesigner.dll
