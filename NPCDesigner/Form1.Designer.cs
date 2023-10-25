@@ -84,7 +84,7 @@
             // 
             // textBox1
             // 
-            textBox1.Font = new Font("Microsoft YaHei UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Font = new Font("Microsoft YaHei UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
             textBox1.Location = new Point(213, 78);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
