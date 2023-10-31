@@ -17,7 +17,7 @@ namespace NPCDesigner
         public void Form1_load(object sender, EventArgs e)
         {
             int idx = 0;
-            string path = Application.StartupPath + @"data\npc\";
+            string path = Application.StartupPath + @"..\data\npc\";
             while (File.Exists(path + @"npc_" + idx.ToString() + ".dat"))
             {
                 string file = @"npc_" + idx.ToString() + ".dat";
@@ -199,7 +199,7 @@ namespace NPCDesigner
         private void button7_Click(object sender, EventArgs e)
         {
             int idx = 0;
-            string file = Application.StartupPath + @"data\npc\";
+            string file = Application.StartupPath + @"..\data\npc\";
             foreach (NPC n in npc)
             {
                 string data = "[npc]\n";
