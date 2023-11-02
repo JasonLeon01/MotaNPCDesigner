@@ -254,7 +254,8 @@
             // 
             // Form1
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(560, 322);
             Controls.Add(button7);
             Controls.Add(listBox2);
