@@ -85,11 +85,13 @@
             // textBox1
             // 
             textBox1.Font = new Font("Microsoft YaHei UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(213, 78);
+            textBox1.Location = new Point(213, 75);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(262, 176);
+            textBox1.ScrollBars = ScrollBars.Both;
+            textBox1.Size = new Size(262, 160);
             textBox1.TabIndex = 3;
+            textBox1.WordWrap = false;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // textBox2
@@ -257,6 +259,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(560, 322);
+            Controls.Add(textBox1);
             Controls.Add(button7);
             Controls.Add(listBox2);
             Controls.Add(checkBox2);
@@ -274,7 +277,6 @@
             Controls.Add(label1);
             Controls.Add(textBox3);
             Controls.Add(textBox2);
-            Controls.Add(textBox1);
             Controls.Add(listBox1);
             Controls.Add(button2);
             Controls.Add(button1);
