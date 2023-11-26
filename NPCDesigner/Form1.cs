@@ -1,4 +1,8 @@
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text.Unicode;
 
 namespace NPCDesigner
 {
@@ -18,23 +22,21 @@ namespace NPCDesigner
         {
             int idx = 0;
             string path = Application.StartupPath + @"..\data\npc\";
-            while (File.Exists(path + @"npc_" + idx.ToString() + ".dat"))
+            while (File.Exists(path + @"npc_" + idx.ToString() + ".json"))
             {
-                string file = @"npc_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText(path + file);
-                string[] data = datatext.Split(Environment.NewLine.ToCharArray());
-                data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
-                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + file);
-                List<int> id = data[1].Split(':')[1].Split(",").Select(int.Parse).ToList();
-                List<string> name = data[2].Split(':')[1].Split(",").ToList();
-                List<string> message = data[3].Split(':')[1].Replace("\\n", "\r\n").Split(",").ToList();
-                List<(int, string, string)> temp = new List<(int, string, string)>();
-                for (int i = 0; i < id.Count; i++)
+                string file = @"npc_" + idx.ToString() + ".json";
+                string jsonstr = System.IO.File.ReadAllText(path + file);
+                jsonstr = jsonstr.Replace("\\n", "\\r\\n");
+                var options = new JsonSerializerOptions
                 {
-                    temp.Add((id[i], name[i], message[i]));
-                    listBox2.Items.Add(name[i]);
-                }
-                npc.Add(new NPC(temp, data[4].Split(':')[1].Replace("none", ""), Convert.ToBoolean(int.Parse(data[5].Split(':')[1])), Convert.ToBoolean(int.Parse(data[6].Split(':')[1]))));
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                    IncludeFields = true,
+                    WriteIndented = true
+                };
+                NPC tempnpc = JsonSerializer.Deserialize<NPC>(jsonstr, options);
+                npc.Add(tempnpc);
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + file);
                 ++idx;
             }
             if (npc.Count == 0)
@@ -43,11 +45,15 @@ namespace NPCDesigner
                 Application.Exit();
                 return;
             }
+            for (int i = 0; i < npc[0].npcInfo.Count; i++)
+            {
+                listBox2.Items.Add(npc[0].npcInfo[i].name);
+            }
             listBox1.SelectedIndex = 0;
             listBox2.SelectedIndex = 0;
-            textBox2.Text = npc[0].info[0].id.ToString();
-            textBox3.Text = npc[0].info[0].name;
-            textBox1.Text = npc[0].info[0].message;
+            textBox2.Text = npc[0].npcInfo[0].id.ToString();
+            textBox3.Text = npc[0].npcInfo[0].name;
+            textBox1.Text = npc[0].npcInfo[0].message;
             textBox4.Text = npc[0].transName;
             checkBox1.Checked = npc[0].fade;
             checkBox2.Checked = npc[0].directlyFunction;
@@ -93,15 +99,15 @@ namespace NPCDesigner
         private void refreshList2()
         {
             listBox2.Items.Clear();
-            foreach (var v in npc[listBox1.SelectedIndex].info)
+            foreach (var v in npc[listBox1.SelectedIndex].npcInfo)
                 listBox2.Items.Add(v.name);
             listBox2.SelectedIndex = list2Index;
         }
         private void updateMessage()
         {
-            textBox2.Text = npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].id.ToString();
-            textBox3.Text = npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name;
-            textBox1.Text = npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message;
+            textBox2.Text = npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].id.ToString();
+            textBox3.Text = npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name;
+            textBox1.Text = npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message;
             textBox4.Text = npc[listBox1.SelectedIndex].transName;
             checkBox1.Checked = npc[listBox1.SelectedIndex].fade;
             checkBox2.Checked = npc[listBox1.SelectedIndex].directlyFunction;
@@ -110,8 +116,8 @@ namespace NPCDesigner
         {
             list1Index = listBox1.SelectedIndex;
             listBox2.Items.Clear();
-            foreach (var info in npc[listBox1.SelectedIndex].info)
-                listBox2.Items.Add(info.name);
+            foreach (var npcInfo in npc[listBox1.SelectedIndex].npcInfo)
+                listBox2.Items.Add(npcInfo.name);
             listBox2.SelectedIndex = 0;
             list2Index = 0;
             updateMessage();
@@ -123,23 +129,23 @@ namespace NPCDesigner
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (-1, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (-1, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
             updateMessage();
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (-2, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (-2, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
             updateMessage();
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            if (textBox2.Text == "") npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (0, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
-            else npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            if (int.TryParse(textBox2.Text, out int intValue)) npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (0, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
+            else npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
 
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].id, textBox3.Text, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].message);
+            npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].id, textBox3.Text, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
             if (textBox3.Text == "none")
             {
                 MessageBox.Show("none和空白等同，将会变回空白，如有更多设置请更改这段源码");
@@ -152,19 +158,19 @@ namespace NPCDesigner
         }
         private void button5_Click(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info.Add((0, "name", ""));
+            npc[listBox1.SelectedIndex].npcInfo.Add((0, "name", ""));
             refreshList2();
             updateMessage();
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            if (npc[listBox1.SelectedIndex].info.Count == 1)
+            if (npc[listBox1.SelectedIndex].npcInfo.Count == 1)
             {
                 MessageBox.Show("不允许删除最后一段对话");
                 return;
             }
-            npc[listBox1.SelectedIndex].info.RemoveAt(listBox2.SelectedIndex);
-            if (list2Index >= npc[listBox1.SelectedIndex].info.Count) list2Index = npc[listBox1.SelectedIndex].info.Count - 1;
+            npc[listBox1.SelectedIndex].npcInfo.RemoveAt(listBox2.SelectedIndex);
+            if (list2Index >= npc[listBox1.SelectedIndex].npcInfo.Count) list2Index = npc[listBox1.SelectedIndex].npcInfo.Count - 1;
             refreshList2();
             updateMessage();
         }
@@ -188,7 +194,7 @@ namespace NPCDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].id, npc[listBox1.SelectedIndex].info[listBox2.SelectedIndex].name, textBox1.Text);
+            npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].id, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, textBox1.Text);
             if (textBox1.Text == "none")
             {
                 MessageBox.Show("none和空白等同，将会变回空白，如有更多设置请更改这段源码");
@@ -202,28 +208,21 @@ namespace NPCDesigner
             string file = Application.StartupPath + @"..\data\npc\";
             foreach (NPC n in npc)
             {
-                string data = "[npc]\n";
-                List<string> id = new List<string>();
-                List<string> name = new List<string>();
-                List<string> message = new List<string>();
-                for (int i = 0; i < n.info.Count; i++)
+                var options = new JsonSerializerOptions
                 {
-                    id.Add(n.info[i].id.ToString());
-                    name.Add(n.info[i].name == "" ? "none" : n.info[i].name);
-                    message.Add(n.info[i].message == "" ? "none" : n.info[i].message);
-                }
-                data = data + "ID:" + string.Join(",", id) + "\n";
-                data = data + "name:" + string.Join(",", name) + "\n";
-                data = data + "message:" + string.Join(",", message).Replace("\r\n", "\\n") + "\n";
-                data = data + "transName:" + (n.transName == "" ? "none" : n.transName) + "\n";
-                data = data + "fade:" + Convert.ToInt32(n.fade).ToString() + "\n";
-                data = data + "directFunc:" + Convert.ToInt32(n.directlyFunction).ToString() + "\n";
-                System.IO.File.WriteAllText(file + @"npc_" + idx.ToString() + ".dat", data);
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                    IncludeFields = true,
+                    WriteIndented = true
+                };
+                string jsonstr = JsonSerializer.Serialize(n, options);
+                jsonstr = jsonstr.Replace("\\r\\n", "\\n");
+                System.IO.File.WriteAllText(file + @"npc_" + idx.ToString() + ".json", jsonstr);
                 idx++;
             }
-            while (File.Exists(file + @"npc_" + idx.ToString() + ".dat"))
+            while (File.Exists(file + @"npc_" + idx.ToString() + ".json"))
             {
-                System.IO.File.Delete(file + @"npc_" + (idx++).ToString() + ".dat");
+                System.IO.File.Delete(file + @"npc_" + (idx++).ToString() + ".json");
             }
             MessageBox.Show("保存成功！");
             refreshList2();
@@ -234,12 +233,13 @@ namespace NPCDesigner
 
 class NPC
 {
-    public List<(int id, string name, string message)> info;
-    public string transName;
-    public bool fade, directlyFunction;
-    public NPC(List<(int, string, string)> info, string transName, bool fade, bool directlyFunction)
+    public List<(int id, string name, string message)> npcInfo { get; set; }
+    public string transName { get; set; }
+    public bool fade { get; set; }
+    public bool directlyFunction { get; set; }
+    public NPC(List<(int, string, string)> npcInfo, string transName, bool fade, bool directlyFunction)
     {
-        this.info = info;
+        this.npcInfo = npcInfo;
         this.transName = transName;
         this.fade = fade;
         this.directlyFunction = directlyFunction;
