@@ -36,8 +36,6 @@
             textBox2 = new TextBox();
             textBox3 = new TextBox();
             label1 = new Label();
-            button3 = new Button();
-            button4 = new Button();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -50,6 +48,9 @@
             checkBox2 = new CheckBox();
             listBox2 = new ListBox();
             button7 = new Button();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton3 = new RadioButton();
             SuspendLayout();
             // 
             // button1
@@ -96,9 +97,9 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(390, 17);
+            textBox2.Location = new Point(424, 17);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(66, 23);
+            textBox2.Size = new Size(32, 23);
             textBox2.TabIndex = 4;
             textBox2.Text = "0";
             textBox2.TextChanged += textBox2_TextChanged;
@@ -119,26 +120,6 @@
             label1.Size = new Size(56, 17);
             label1.TabIndex = 6;
             label1.Text = "对话事件";
-            // 
-            // button3
-            // 
-            button3.Location = new Point(275, 15);
-            button3.Name = "button3";
-            button3.Size = new Size(47, 25);
-            button3.TabIndex = 7;
-            button3.Text = "主角";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(328, 15);
-            button4.Name = "button4";
-            button4.Size = new Size(56, 25);
-            button4.TabIndex = 8;
-            button4.Text = "本事件";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
             // 
             // label2
             // 
@@ -254,11 +235,50 @@
             button7.UseVisualStyleBackColor = true;
             button7.Click += button7_Click;
             // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(267, 17);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(50, 21);
+            radioButton1.TabIndex = 21;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "主角";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(311, 17);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(62, 21);
+            radioButton2.TabIndex = 22;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "本事件";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(368, 17);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(50, 21);
+            radioButton3.TabIndex = 23;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "其他";
+            radioButton3.UseVisualStyleBackColor = true;
+            radioButton3.CheckedChanged += radioButton3_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(560, 322);
+            Controls.Add(radioButton3);
+            Controls.Add(radioButton2);
+            Controls.Add(radioButton1);
             Controls.Add(textBox1);
             Controls.Add(button7);
             Controls.Add(listBox2);
@@ -272,8 +292,6 @@
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(label1);
             Controls.Add(textBox3);
             Controls.Add(textBox2);
@@ -300,8 +318,6 @@
         private TextBox textBox2;
         private TextBox textBox3;
         private Label label1;
-        private Button button3;
-        private Button button4;
         private Label label2;
         private Label label3;
         private Label label4;
@@ -314,5 +330,8 @@
         private CheckBox checkBox2;
         private ListBox listBox2;
         private Button button7;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private RadioButton radioButton3;
     }
 }

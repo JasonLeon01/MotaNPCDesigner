@@ -111,6 +111,21 @@ namespace NPCDesigner
             textBox4.Text = npc[listBox1.SelectedIndex].transName;
             checkBox1.Checked = npc[listBox1.SelectedIndex].fade;
             checkBox2.Checked = npc[listBox1.SelectedIndex].directlyFunction;
+            if (npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].id == -1)
+            {
+                radioButton1.Checked = true;
+                textBox2.ReadOnly = true;
+            }
+            else if (npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].id == -2)
+            {
+                radioButton2.Checked = true;
+                textBox2.ReadOnly = true;
+            }
+            else
+            {
+                radioButton3.Checked = true;
+                textBox2.ReadOnly = false;
+            }
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -139,9 +154,14 @@ namespace NPCDesigner
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(textBox2.Text, out int intValue)) npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (0, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
-            else npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
-
+            if (int.TryParse(textBox2.Text, out int intValue))
+            {
+                npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (int.Parse(textBox2.Text), npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
+            }
+            else
+            {
+                npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (0, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
+            }
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -227,6 +247,31 @@ namespace NPCDesigner
             MessageBox.Show("±£´æ³É¹¦£¡");
             refreshList2();
             return;
+        }
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                textBox2.ReadOnly = true;
+                npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (-1, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
+                updateMessage();
+            }
+        }
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                textBox2.ReadOnly = true;
+                npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex] = (-2, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].name, npc[listBox1.SelectedIndex].npcInfo[listBox2.SelectedIndex].message);
+                updateMessage();
+            }
+        }
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked)
+            {
+                textBox2.ReadOnly = false;
+            }
         }
     }
 }
