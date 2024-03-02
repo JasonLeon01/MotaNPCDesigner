@@ -233,7 +233,7 @@ namespace NPCDesigner
                     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                     DefaultIgnoreCondition = JsonIgnoreCondition.Never,
                     IncludeFields = true,
-                    WriteIndented = true
+                    WriteIndented = false
                 };
                 string jsonstr = JsonSerializer.Serialize(n, options);
                 jsonstr = jsonstr.Replace("\\r\\n", "\\n");
